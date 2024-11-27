@@ -1,27 +1,28 @@
-using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine;
 
 public class BoardManager : MonoBehaviour
 {
+    public class CellData
+    {
+        public bool Passable;
+    }
+
+    private CellData[,] m_BoardData;
     private Tilemap m_Tilemap;
+    private Grid m_Grid;
 
     public int Width;
     public int Height;
     public Tile[] GroundTiles;
-    public Tile[] WallTiles;
-    private Grid m_Grid;
+    public Tile[] BlockingTiles;
 
-    public PlayerController Player;
-
-    // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
         m_Tilemap = GetComponentInChildren<Tilemap>();
-
         m_Grid = GetComponentInChildren<Grid>();
 
         m_BoardData = new CellData[Width, Height];
-
 
         for (int y = 0; y < Height; ++y)
         {
@@ -32,20 +33,18 @@ public class BoardManager : MonoBehaviour
 
                 if (x == 0 || y == 0 || x == Width - 1 || y == Height - 1)
                 {
-                    tile = WallTiles[Random.Range(0, WallTiles.Length)];
+                    tile = BlockingTiles[Random.Range(0, BlockingTiles.Length)];
                     m_BoardData[x, y].Passable = false;
                 }
                 else
                 {
                     tile = GroundTiles[Random.Range(0, GroundTiles.Length)];
-                    m_BoardData[x,y].Passable = true;
+                    m_BoardData[x, y].Passable = true;
                 }
 
                 m_Tilemap.SetTile(new Vector3Int(x, y, 0), tile);
             }
-            
         }
-        Player.Spawn(this, new Vector2Int(1, 1));
     }
 
     public Vector3 CellToWorld(Vector2Int cellIndex)
@@ -63,10 +62,4 @@ public class BoardManager : MonoBehaviour
 
         return m_BoardData[cellIndex.x, cellIndex.y];
     }
-
-    public class CellData
-    {
-        public bool Passable;
-    }
-    private CellData[,] m_BoardData;
 }
