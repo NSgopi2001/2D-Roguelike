@@ -289,7 +289,7 @@ MonoBehaviour:
   BlockingTiles:
   - {fileID: 11400000, guid: ea89a9f0bc6b3214b8294be45c592518, type: 2}
   - {fileID: 11400000, guid: 854b3a55ae0611a4da0488a7cfe96d59, type: 2}
-  FoodPrefab: {fileID: 263982876393640861, guid: 88c2dc434133d864b89c879098a19c67, type: 3}
+  FoodPrefab: {fileID: -2931511524077085182, guid: 88c2dc434133d864b89c879098a19c67, type: 3}
 --- !u!1 &977382749
 GameObject:
   m_ObjectHideFlags: 0
