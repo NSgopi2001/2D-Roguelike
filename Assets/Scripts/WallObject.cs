@@ -9,6 +9,12 @@ public class WallObject : CellObject
     private int m_HealthPoint;
     private Tile m_OriginalTile;
 
+    private PlayerController player;
+
+    private void Awake()
+    {
+        player = GameObject.Find("PlayerCharacter").GetComponent<PlayerController>();
+    }
     public override void Init(Vector2Int cell)
     {
         base.Init(cell);
@@ -22,9 +28,10 @@ public class WallObject : CellObject
     public override bool PlayerWantsToEnter()
     {
         m_HealthPoint -= 1;
-
+        
         if (m_HealthPoint > 0)
         {
+            player.Attack();
             return false;
         }
 

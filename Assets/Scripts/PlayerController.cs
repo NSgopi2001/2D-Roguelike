@@ -13,6 +13,27 @@ public class PlayerController : MonoBehaviour
     private bool m_IsMoving;
     private Vector3 m_MoveTarget;
 
+    private Animator m_Animator;
+
+    public Vector2Int Cell
+    {
+        get
+        {
+            return m_CellPosition;
+        }
+        set
+        {
+            m_CellPosition = value;
+        }
+    }
+
+
+
+    private void Awake()
+    {
+        m_Animator = GetComponent<Animator>();
+    }
+
     public void Init()
     {
         m_IsMoving = false;
@@ -44,6 +65,13 @@ public class PlayerController : MonoBehaviour
             m_IsMoving = true;
             m_MoveTarget = m_Board.CellToWorld(m_CellPosition);
         }
+
+        m_Animator.SetBool("Moving", m_IsMoving);
+    }
+
+    public void Attack()
+    {
+        m_Animator.SetTrigger("Attack");
     }
 
 
@@ -66,6 +94,7 @@ public class PlayerController : MonoBehaviour
             if (transform.position == m_MoveTarget)
             {
                 m_IsMoving = false;
+                m_Animator.SetBool("Moving", m_IsMoving);
                 var cellData = m_Board.GetCellData(m_CellPosition);
                 if (cellData.ContainedObject != null)
                     cellData.ContainedObject.PlayerEntered();
